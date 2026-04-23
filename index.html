@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ViralAI Creator</title>
+</head>
+<body>
+  <h1>🔥 ViralAI Creator</h1>
+
+  <input id="input" placeholder="Idée TikTok..." />
+  <button onclick="generate()">Générer</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    async function generate() {
+      const input = document.getElementById("input").value;
+
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer TON_API_KEY"
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "user", content: "Crée un script TikTok viral sur: " + input }
+          ]
+        })
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText =
+        data.choices[0].message.content;
+    }
+  </script>
+</body>
+</html>
